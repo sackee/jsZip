@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>测试</title>
+
+<script src="jquery.min.js"></script>
+<script src="https://unpkg.com/qiniu-js@2.1.2/dist/qiniu.min.js"></script>
+<script src="fzQiniu.js"></script>
+</head>
+
+<body>
+<div class="container">
+  
+
+              <input type="text" value='' name="subtitle_en" class="subtitle_en">
+              
+              <a href='javascript:;' class='btn upload-srt'>base上传</a><br/>
+              <input type="file" name="picfile" class="file"/>
+           
+  </div>
+</div>
+
+<script type="text/javascript">
+
+	
+   var base_complete=function(res){
+  	 var qiniu_upload_file_url = "{:U('qiniu_upload_file')}";
+  	 var save=res.key.split("/");
+     var file_json = {"savepath":save[0] + "/","savename":save[1]};
+
+  	 $.ajax({
+           type: "POST",
+           url: qiniu_upload_file_url,
+           dataType: 'json',
+           async: false,
+           data: file_json,
+           success: function(data) {
+               if (data.status == 1) {
+              	 alert('修改字幕成功！');
+                   $(".subtitle_en").val(data.file_id);
+               } else {
+                   alert(data.msg);
+               }
+           }
+       });
+  }
+//base64上传
+$(".upload-srt").click(function(){
+	var base=$(this).prev().html().replace(/(^\s*)|(\s*$)/g, "");
+	base=base.replace(/&quot;/g,'"').replace(/&nbsp;/g,' ').replace(/&#091;/g,'[').replace(/&#093;/g,']');
+	base=base.replace(/<\/[^>]*>/gm,"\r\n");
+	base=base.replace(/<[^>]*>/gm,"");
+	base=Base64.encode(base);
+	var myqiniubase=new fzQiniuBase64(base,base_complete);
+	myqiniubase.setConfig({'ext':'.srt','baseType':'DATA'});
+	myqiniubase.upload();
+	
+});
+
+//按钮上传
+  var complete=function(res){
+      myqiniu.obj.parent().attr('pic',myqiniu.key);
+      myqiniu.obj.next().attr("src",'http://img.qupeiyin.cn/'+myqiniu.key);
+      myqiniu.obj.next().next().show();
+    }
+    var next=function(res){
+      //console.log(res);
+    }
+    var error=function(res){
+      //console.log(res);
+    }
+    var myqiniu=new fzQiniuPic('.file',complete,next,error);
+    myqiniu.upload();
+	 
+ 
+</script>
+</body>
+</html>
