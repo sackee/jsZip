@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>测试</title> 
+<script src="jquery.min.js"></script>
+<script src="jweixin-1.2.0.js"></script>
+<script src="fzWx.js"></script>
+</head>
+
+<body>
+<div class="container">
+	hello
+</div>
+</div>
+<script type="text/javascript">
+
+var title="测试";
+var sharelink="http://baidu.com";
+var imgUrl="http://baidu.com";
+var desc="描述";
+fzWx.init();
+fzWx.share(title,desc,sharelink,imgUrl);//分享
+fzWx.hideAll();//隐藏菜单
+function wxShareSuccess(){
+	alert('分享成功');
+}
+
+
+</script>
+</body>
+</html>
+

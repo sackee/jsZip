@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>测试</title> 
+<script src="jquery.min.js"></script>
+<script src="jszip.min.js"></script>
+<script src="FileSaver.js"></script>
+<script src="fzZip.js"></script>
+</head>
+
+<body>
+<div class="container">
+	<a href="javascript:;" class="btn btn-download">下载</a>
+</div>
+</div>
+<script type="text/javascript">
+
+//下载
+$(".btn-download").click(function(){
+	
+	var zip=new fzZip();
+	zip.setComplete(function(res){
+	    $(".btn-download").text("下载");
+	    $(".btn-download").attr("disabled", false);
+	    $(".btn-download").css("pointer-events","auto");
+	})
+
+	zip.append("http://cdn.qupeiyin.cn/2018-06-07/5b18e2ed26d46.mp4");
+  	zip.append("http://cdn.qupeiyin.cn/2018-07-10/1531195441177.txt");
+	zip.run('ceshi.zip');
+})
+
+</script>
+</body>
+</html>
+
