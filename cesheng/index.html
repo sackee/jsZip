@@ -1,0 +1,52 @@
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/> 
+    <title>微信支付样例-支付</title>
+    <script type="text/javascript" src="jquery.js"></script>
+    <script type="text/javascript" src="AiEngine.min.js?"></script>
+    <script type="text/javascript" src="jweixin-1.2.0.js?"></script>
+    <script type="text/javascript" src="fzWx.js?"></script>
+    <script type="text/javascript" src="fzCiSheng.js?"></script>
+</head>
+<body>
+    <br/>
+	<div align="center">
+		<button class="record" style="width:210px; height:50px; border-radius: 15px;background-color:#FE6714; border:0px #FE6714 solid; cursor: pointer;  color:white;  font-size:16px;" type="button">开始录音</button>
+	</div>
+	<script type="text/javascript">	 
+	 function toast(text){
+		 alert(text);
+	 }
+	 
+	 function beforeStartRecord() {
+		 $(".record").addClass("isstart");
+		 $(".record").text("录音中...");
+	 }
+	 
+	 function cepingComplete() {
+		 alert(fzAiengine.res.result.details[0].score);
+		 $(".record").removeClass("isstart");
+		 $(".record").text("开始录音");
+	 }
+	 
+	 function stopRecordSuccess() {
+		 $(".record").text("测评中...");
+	 }
+	 
+	 function jsapiSignCallBack() {
+		 fzAiengine.aiengineNew();
+	 }
+	 
+	 $(".record").click(function(){
+		 if (!$(this).hasClass("isstart")) {
+			 fzAiengine.aiengineStart("hello world");
+		 } else {
+			 fzAiengine.aiengineStop();
+		 }
+	 })
+	 fzWx.init();
+	 
+	</script>
+</body>
+</html>
